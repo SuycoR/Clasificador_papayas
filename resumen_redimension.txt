@@ -1,0 +1,4 @@
+,Total Imágenes
+mature,100
+partiallymature,100
+unmature,100
