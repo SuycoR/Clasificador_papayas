@@ -12,6 +12,8 @@ img_array = np.expand_dims(img_array, axis=0)  # shape: (1, 224, 224, 3)
 data = {
     "data": img_array.tolist()
 }
+
+# Convertir a JSON
 body = str.encode(json.dumps(data))
 
 # Endpoint y clave
