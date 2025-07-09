@@ -17,8 +17,8 @@ data = {
 body = str.encode(json.dumps(data))
 
 # Endpoint y clave
-url = 'https://cp-azuremachinelearning-jiaxl.brazilsouth.inference.ml.azure.com/score'
-api_key = '9JhLa1AOFxdUABA8N4jkHeavLVfI1OVSKuq817o2fdOKnKNDaMFFJQQJ99BFAAAAAAAAAAAAINFRAZMLtqbK'
+url = 'https://cp-azuremachinelearning-xhjoa.brazilsouth.inference.ml.azure.com/score'
+api_key = '79aXUV4qY5L0QxLDYbTxZf4Xis1v9cJnmXdA2eEL6rr0mfbOrwYuJQQJ99BGAAAAAAAAAAAAINFRAZMLuTnB'
 
 headers = {
     'Content-Type': 'application/json',
