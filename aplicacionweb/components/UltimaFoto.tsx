@@ -9,7 +9,7 @@ export default function UltimaFoto({ fotoUrl, prediccion }: Props) {
       <div>
         <h5>Ultima foto tomada:</h5>
         <img
-          src={"http://192.168.0.9:5000/foto"}
+          src={"http://192.168.0.9:5000/api/conseguirfoto"}
           alt="Última foto"
           style={{ width: '200px', border: '1px solid gray' }}
         />
