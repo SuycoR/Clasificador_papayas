@@ -5,7 +5,7 @@ export default function UltimaFoto() {
   const [error, setError] = useState<string | null>(null);
 
   const obtenerPrediccion = () => {
-    fetch('http://192.168.0.9:5000/api/resultado')
+    fetch('http://192.168.30.13:5000/api/resultado')
       .then((res) => {
         if (!res.ok) throw new Error('Error en la respuesta del servidor');
         return res.json();
@@ -58,7 +58,7 @@ export default function UltimaFoto() {
       <div>
         <h5>Última foto tomada:</h5>
         <img
-           src={`http://192.168.0.9:5000/api/conseguirfoto?timestamp=${Date.now()}`}
+           src={`http://192.168.30.13:5000/api/conseguirfoto?timestamp=${Date.now()}`}
           alt="Última foto"
           style={{ width: '200px', border: '1px solid gray' }}
         />

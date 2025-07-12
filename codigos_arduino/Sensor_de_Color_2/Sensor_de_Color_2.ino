@@ -1,70 +1,65 @@
-int S0 = 51;
-int S1 = 52;
-int S2 = 49;
-int S3 = 50;
-int outPin = 48;
+  
+#define S0 2		// S0 a pin 2 MORADO
+#define S1 3		// S1 a pin 3 VERDE
+#define S2 4		// S2 a pin 4  NARANJA
+#define S3 5		// S3 a pin 5  AMARILLO
+#define salidaTCS 8	// salidaTCS a pin 8 AZUL
+#define pin9 9 // Salida 
 
-unsigned int redPW = 0;
-unsigned int greenPW = 0;
-unsigned int bluePW = 0;
 
 void setup() {
-  Serial.begin(9600);
-
-  pinMode(S0, OUTPUT);
-  pinMode(S1, OUTPUT);
-  pinMode(S2, OUTPUT);
-  pinMode(S3, OUTPUT);
-  pinMode(outPin, INPUT);
-
-  // Configurar frecuencia de salida al 100%
-  digitalWrite(S0, HIGH);
-  digitalWrite(S1, HIGH);
-
-  Serial.println("***Electrotec - TCS3200***");
+  pinMode(S0, OUTPUT);		// pin 2 como salida
+  pinMode(S1, OUTPUT);		// pin 3 como salida
+  pinMode(S2, OUTPUT);		// pin 4 como salida
+  pinMode(S3, OUTPUT);		// pin 5 como salida
+  pinMode(salidaTCS, INPUT);	// pin 8 como entrada
+  pinMode(pin9,OUTPUT);
+  digitalWrite(pin9,HIGH);
+  
+  digitalWrite(S0,HIGH);	// establece frecuencia de salida
+  digitalWrite(S1,LOW);		// del modulo al 20 por ciento
+  
+  Serial.begin(9600);		// inicializa monitor serie a 9600 bps
 }
 
 void loop() {
-  // Leer rojo
-  digitalWrite(S2, LOW);
-  digitalWrite(S3, LOW);
-  delay(50);
-  redPW = pulseIn(outPin, LOW);
+  digitalWrite(S2,LOW);			// establece fotodiodos
+  digitalWrite(S3,LOW);			// con filtro rojo
+  int rojo = pulseIn(salidaTCS, LOW);	// obtiene duracion de pulso de salida del sensor
+  delay(200);				// demora de 200 mseg
+  
+  digitalWrite(S2,HIGH);		// establece fotodiodos
+  digitalWrite(S3,HIGH);		// con filtro verde
+  int verde = pulseIn(salidaTCS, LOW);	// obtiene duracion de pulso de salida del sensor
+  delay(200);				// demora de 200 mseg
+  
+  digitalWrite(S2,LOW);			// establece fotodiodos
+  digitalWrite(S3,HIGH);		// con filtro azul
+  int azul = pulseIn(salidaTCS, LOW);	// obtiene duracion de pulso de salida del sensor
+  delay(200);				// demora de 200 mseg
+  
+  Serial.print("R:");			// muestra texto
+  Serial.print(rojo);			// muestra valor de variable rojo
 
-  // Leer verde
-  digitalWrite(S2, HIGH);
-  digitalWrite(S3, HIGH);
-  delay(50);
-  greenPW = pulseIn(outPin, LOW);
+  Serial.print("\t");			// espacio de tabulacion
 
-  // Leer azul
-  digitalWrite(S2, LOW);
-  digitalWrite(S3, HIGH);
-  delay(50);
-  bluePW = pulseIn(outPin, LOW);
+  Serial.print("V:");			// muestra texto
+  Serial.print(verde);			// muestra valor de variable verde
 
-  // Mostrar valores
-  Serial.print("Red PW: ");
-  Serial.print(redPW);
-  Serial.print(" | Green PW: ");
-  Serial.print(greenPW);
-  Serial.print(" | Blue PW: ");
-  Serial.println(bluePW);
+  Serial.print("\t");			// espacio de tabulacion
 
-  // Detectar color aproximado
-  if (redPW < greenPW && redPW < bluePW) {
-    Serial.println("Color detectado: ROJO");
-  } 
-  else if (greenPW < redPW && greenPW < bluePW) {
-    Serial.println("Color detectado: VERDE");
-  } 
-  else if (bluePW < redPW && bluePW < greenPW) {
-    Serial.println("Color detectado: AZUL");
-  } 
-  else {
-    Serial.println("Color detectado: DESCONOCIDO");
+  Serial.print("A:");			// muestra texto
+  Serial.println(azul);			// muestra valor de variable azul
+  					// y salto de linea
+  if (verde < 300 && rojo > 300 && azul > 80){
+    Serial.println("VERDE");
+    digitalWrite(pin9, HIGH);
   }
-
-  Serial.println("------------------------");
-  delay(500);
+  else if (verde < 90 && rojo < 60 && azul < 100){
+    Serial.println("NARANJA");
+    digitalWrite(pin9, LOW);
+    delay(1000);
+    digitalWrite(pin9,HIGH);
+  }
 }
+  
